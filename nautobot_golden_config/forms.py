@@ -9,6 +9,7 @@ from nautobot.extras.models import Status
 from nautobot.extras.models import GitRepository
 from nautobot.tenancy.models import Tenant, TenantGroup
 from nautobot.utilities.forms import StaticSelect2Multiple
+from nautobot.utilities.forms.fields import DynamicModelMultipleChoiceField
 
 from nautobot_golden_config import models
 from nautobot_golden_config.utilities.helper import clean_config_settings
@@ -333,11 +334,11 @@ class GoldenConfigSettingFeatureForm(
 ):
     """Filter Form for GoldenConfigSettingFeatureForm instances."""
 
-    backup_repository = forms.ModelMultipleChoiceField(
+    backup_repository = DynamicModelMultipleChoiceField(
         queryset=GitRepository.objects.filter(provided_contents__contains="nautobot_golden_config.backupconfigs"),
         widget=StaticSelect2Multiple(),
     )
-    intended_repository = forms.ModelMultipleChoiceField(
+    intended_repository = DynamicModelMultipleChoiceField(
         queryset=GitRepository.objects.filter(provided_contents__contains="nautobot_golden_config.intendedconfigs"),
         widget=StaticSelect2Multiple(),
     )
